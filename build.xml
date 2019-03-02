@@ -4,38 +4,18 @@
 	<property file="build.properties"/>
 	
 	<!-- Telling Ant where the classpath is -->
-	<path id="classpath">
-		<fileset dir="${lib.dir}">
-			<include name="*.jar"/>
-		</fileset>
-		<pathelement path="${build.dir}"/>
-	</path>
-	
-	<target name="build" depends="compile-java">
-	</target>
-	
-	<target name="compile-java" description="Compiles the Java side of the library">
+	<target name="build" description="Compiles the Java side of the library">
 		<mkdir dir="${build.dir}"/>
 		
 		<javac source="1.8" target="1.8" nativeheaderdir="${build.dir}" includeAntRuntime="false" destdir="${build.dir}">
-			<src path="${src.java.dir}"/>
-			<classpath refid="classpath"/>
+			<src path="${src.dir}"/>
 		</javac>
-	</target>
-	
-	<!-- Need to add -->
-	<target name="compile-jni" description="Compiles the JNI side of the library">
-		<exec executable="gcc">
-			<arg line=""/>
-		</exec>
 	</target>
 	
 	<target name="clean" description="Cleans outputted files">
 		<delete includeEmptyDirs="true">
 			<fileset dir="${build.dir}">
 				<include name="**/*.class"/>
-				<include name="**/*.h"/>
-				<include name="*/"/>
 			</fileset>
 			<fileset dir=".">
 				<include name="build"/>
