@@ -3,12 +3,19 @@
 	<!-- Importing properties -->
 	<property file="build.properties"/>
 	
+	<path id="lib-classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+	
 	<!-- Telling Ant where the classpath is -->
 	<target name="build" description="Compiles the Java side of the library">
 		<mkdir dir="${build.dir}"/>
 		
 		<javac source="1.8" target="1.8" nativeheaderdir="${build.dir}" includeAntRuntime="false" destdir="${build.dir}">
-			<src path="${src.dir}"/>
+			<src path="${src.java.dir}"/>
+			<classpath refid="lib-classpath"/>
 		</javac>
 	</target>
 	
@@ -16,6 +23,8 @@
 		<delete includeEmptyDirs="true">
 			<fileset dir="${build.dir}">
 				<include name="**/*.class"/>
+				<include name="**/*.h"/>
+				<include name="*/"/>
 			</fileset>
 			<fileset dir=".">
 				<include name="build"/>
